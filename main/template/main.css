@@ -36,3 +36,10 @@ h3{
 h1{
     text-align: center;
 }
+
+form {
+    border: 1px solid snow;
+    display: block;
+    margin: 5px;
+    padding: 5px;
+}
