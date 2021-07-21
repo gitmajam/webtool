@@ -13,8 +13,21 @@
         <h1 class="tittle">Gallery</h1>
 
     </header>
-    <nav></nav>
 
+    <nav>
+        <form action="/login" method="POST">
+            <input name="username" type="text" placeholder="email">
+            <input name="fname" type="text" placeholder="First Name">
+            <input name="lname" type="text" placeholder="Last Name">
+            <input type="submit" value="Register">
+        </form>
+
+        {{if .}}
+        <h2>Username: {{.UserName}}</h2>
+        <h2>First Name: {{.First}}</h2>
+        <h2>Last Name: {{.Last}}</h2>
+        {{end}}
+    </nav>
 
     <section>
         <div class="gabriel">
