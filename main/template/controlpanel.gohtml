@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Control Panel</title>
+    <link rel="stylesheet" href="/tmp/main.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <h2><a href="/logout">logout</a></h2>
+            <h2><a href="/gallery">gallery</a></h2>
+        </div>
+        <div>
+            <h1 class="tittle">Control Panel</h1>
+        </div>
+    </header>
+
+    <nav>
+        {{if .}}
+        <ul>
+            {{range $key, $val := .}}
+            <li><strong>{{$key}}</strong></li>
+            <li>     {{$val.UserName}}</li>
+            <li>     {{$val.First}}</li>
+            <li>     {{$val.Last}}</li>
+            <li>     {{$val.Role}}</li>
+
+            {{end}}
+        </ul>
+        {{end}}
+    </nav>
+
+    <section>
+
+    </section>
+
+
+    <footer>
+    </footer>
+
+</body>
+
+</html>
