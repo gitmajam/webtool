@@ -10,32 +10,33 @@
 
 <body>
     <header>
-        <div>
-            <h2><a href="/logout">logout</a></h2>
+        <h1 class="dark tittle">GALLERY</h1>
+    </header>
+    <nav>
+        <section>
+            <h2 class="slight"><a class="navi" href="/logout" style="text-decoration: none;">logout</a></h2>
             {{if .}}
             {{if eq .Role "superadmin"}}
-            <h2><a href="/controlPanel">Control Panel</a></h2>
+            <h2 class="slight"><a class="navi" href="/controlPanel" style="text-decoration: none;">Control Panel</a></h2>
             {{end}}
             {{end}}
-        </div>
-        <div>
-            <h1 class="tittle">Gallery</h1>
-        </div>
+        </section>
 
-    </header>
-
-    <nav>
-        {{if .}}
-        <h2>Username: {{.UserName}}</h2>
-        <h2>First Name: {{.First}}</h2>
-        <h2>Last Name: {{.Last}}</h2>
-        <h2>Role: {{.Role}}</h2>
-        {{end}}
+        <section>
+            {{if .}}
+            <div>
+                <h3 class="light personal">Username: {{.UserName}}</h3>
+                <h3 class="light personal">First Name: {{.First}}</h3>
+                <h3 class="light personal">Last Name: {{.Last}}</h3>
+                <h3 class="light personal">Role: {{.Role}}</h3>
+            </div>
+            {{end}}
+        </section>
     </nav>
 
     <section>
         <div class="gabriel">
-            <h2 class="tittle">Gabriel's Gallery</h2>
+            <h2 class="dark tittle">Gabriel's Gallery</h2>
             <aside>
                 {{if .}}
                 {{if eq .Role "admin"}}
@@ -49,25 +50,25 @@
                 {{end}}
             </aside>
             <article>
-                <h3>Gato de colores</h3>
+                <h3 class="dark tittle">Gato de colores</h3>
                 <img src="/resources/img/gato-color.png" alt="gato color">
                 <img src="/resources/img/Pulpo1.jpg" alt="gato color">
                 <img src="/resources/img/Volcan1.jpg" alt="gato color">
             </article>
 
             <article>
-                <h3>Calendario</h3>
+                <h3 class="dark tittle">Calendario</h3>
                 <img src="/resources/img/Calendario1.jpg" alt="Calendario1">
             </article>
 
             <article>
-                <h3>Gato de colores</h3>
+                <h3 class="dark tittle">Gato de colores</h3>
                 <img src="/resources/img/Laberinto.jpg" alt="Laberinto">
             </article>
         </div>
 
         <div class="david">
-            <h2 class="tittle">David's Gallery</h2>
+            <h2 class="dark tittle">David's Gallery</h2>
             <aside>
                 {{if .}}
                 {{if eq .Role "admin"}}
@@ -81,7 +82,7 @@
                 {{end}}
             </aside>
             <article>
-                <h3>Blog David</h3>
+                <h3 class="dark tittle">Blog David</h3>
                 <img src="http://4.bp.blogspot.com/_EUp_3tMVQgQ/Sr-PsCYac3I/AAAAAAAAAGQ/BJNVbwcQFTw/s400/DSC06085.JPG">
                 <img src="http://3.bp.blogspot.com/_EUp_3tMVQgQ/Sg15czHgoQI/AAAAAAAAAEw/n__hs7Sn7bk/s400/DSC02462.JPG">
             </article>

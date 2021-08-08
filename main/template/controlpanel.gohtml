@@ -10,34 +10,46 @@
 
 <body>
     <header>
-        <div>
-            <h2><a href="/logout">logout</a></h2>
-            <h2><a href="/gallery">gallery</a></h2>
-        </div>
-        <div>
-            <h1 class="tittle">Control Panel</h1>
-        </div>
+        <h1 class="dark tittle">CONTROL PANEL</h1>
     </header>
 
     <nav>
-        {{if .}}
-        <ul>
-            {{range $key, $val := .}}
-            <li><strong>{{$key}}</strong></li>
-            <li>     {{$val.UserName}}</li>
-            <li>     {{$val.First}}</li>
-            <li>     {{$val.Last}}</li>
-            <li>     {{$val.Role}}</li>
+        <section>
+            <h2 class="slight"><a class="navi" href="/logout" style="text-decoration: none;">logout</a></h2>
+            <h2 class="slight"><a class="navi" href="/gallery" style="text-decoration: none;">gallery</a></h2>
+        </section>
 
+        <section>
+            {{if .User}}
+            <div>
+                <h4>Username: {{.User.UserName}}</h4>
+                <h4>First Name: {{.User.First}}</h4>
+                <h4>Last Name: {{.User.Last}}</h4>
+                <h4>Role: {{.User.Role}}</h4>
+            </div>
             {{end}}
-        </ul>
-        {{end}}
+        </section>
+
+        <section>
+            {{if .Users}}
+            <div>
+                <ul>
+                    {{range $key, $val := .Users}}
+                    <li><strong>{{$key}}</strong></li>
+                    <li> {{$val.UserName}}</li>
+                    <li> {{$val.First}}</li>
+                    <li> {{$val.Last}}</li>
+                    <li> {{$val.Role}}</li>
+
+                    {{end}}
+                </ul>
+            </div>
+            {{end}}
+        </section>
     </nav>
 
     <section>
-
     </section>
-
 
     <footer>
     </footer>

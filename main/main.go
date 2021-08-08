@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -11,6 +12,8 @@ import (
 
 	uuid "github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type user struct {
@@ -24,8 +27,10 @@ type user struct {
 var tpl *template.Template
 var dbSessions = map[string]string{}
 var dbUsers = map[string]user{}
+var db *sql.DB
+var err error
 
-const sessionLength int = 30
+const sessionLength int = 1000
 
 // other form to declare an empty map
 /*
@@ -33,10 +38,22 @@ var dbUsers = make(map[string]user)
 */
 
 func init() {
+
 	tpl = template.Must(template.ParseGlob("template/*"))
-	//encrypt init superadmin password
-	bs, _ := bcrypt.GenerateFromPassword([]byte("Colombia1"), bcrypt.MinCost)
-	dbUsers["superadmin@test.com"] = user{"superadmin@test.com", bs, "James", "Bond", "superadmin"}
+
+	//connection to data base
+	db, err = sql.Open("mysql", "awuser:Teflonio45@tcp(mydbinstance.cvbw65qn9mnn.us-east-2.rds.amazonaws.com)/test02?charset=utf8")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	//verify database connection
+	err = db.Ping()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("conexion a base de datos")
+	}
 }
 
 func main() {
@@ -45,18 +62,24 @@ func main() {
 	http.Handle("/tmp/", http.StripPrefix("/tmp", http.FileServer(http.Dir("template"))))
 	http.Handle("/", http.HandlerFunc(index))
 	http.Handle("/favicon.ico", http.NotFoundHandler())
-	http.HandleFunc("/uploadGabriel", authorized(upGabriel))
-	http.HandleFunc("/uploadDavid", authorized(upDavid))
+	http.HandleFunc("/uploadGabriel", session(upGabriel))
+	http.HandleFunc("/uploadDavid", session(upDavid))
 	http.HandleFunc("/signup", signup)
-	http.HandleFunc("/gallery", authorized(gallery))
-	http.HandleFunc("/controlPanel", authorized(controlPanel))
-	http.HandleFunc("/logout", authorized(logout))
+	http.HandleFunc("/gallery", session(gallery))
+	http.HandleFunc("/controlPanel", session(permission(controlPanel)))
+	http.HandleFunc("/logout", session(logout))
 
-	http.ListenAndServe("Localhost:8080", nil)
+	http.HandleFunc("/users", users)
+	// http.HandleFunc("/controlPanel/create", session(permission(create)))
+	// http.HandleFunc("/controlPanel/insert", session(permission(insert)))
+	// http.HandleFunc("/controlPanel/read", session(permission(read)))
+	// http.HandleFunc("/controlPanel/update", session(permission(update)))
+	// http.HandleFunc("/controlPanel/delete", session(permission(delete)))
+
+	http.ListenAndServe(":8080", nil)
 }
 
 func index(res http.ResponseWriter, req *http.Request) {
-	fmt.Println("Entro a Index")
 
 	if sessionIsActive(res, req) {
 		http.Redirect(res, req, "/gallery", http.StatusSeeOther)
@@ -202,19 +225,6 @@ func gallery(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func upGabriel(res http.ResponseWriter, req *http.Request) {
-
-	fmt.Println("Post Method received, form Gabriel")
-	SaveFile(res, req, "./user/gabriel/")
-}
-
-func upDavid(res http.ResponseWriter, req *http.Request) {
-
-	fmt.Println("Post Method received, form David")
-	SaveFile(res, req, "./user/david/")
-
-}
-
 func SaveFile(res http.ResponseWriter, req *http.Request, directory string) {
 
 	//Open the File received
@@ -249,6 +259,7 @@ func SaveFile(res http.ResponseWriter, req *http.Request, directory string) {
 	}
 	http.Redirect(res, req, "/gallery", http.StatusSeeOther)
 }
+
 func logout(res http.ResponseWriter, req *http.Request) {
 	fmt.Println("Entro a Logout")
 
@@ -267,12 +278,42 @@ func logout(res http.ResponseWriter, req *http.Request) {
 	http.SetCookie(res, cookie)
 	http.Redirect(res, req, "/index", http.StatusSeeOther)
 }
+
 func controlPanel(res http.ResponseWriter, req *http.Request) {
 	fmt.Println("Entró a Contro Panel")
 
+	u, _ := getUser(req)
+
+	s := struct {
+		Users map[string]user
+		User  user
+	}{
+		Users: dbUsers,
+		User:  u,
+	}
+
 	//Executes template and goes out by res
-	err := tpl.ExecuteTemplate(res, "controlpanel.gohtml", dbUsers)
+	err := tpl.ExecuteTemplate(res, "controlpanel.gohtml", s)
 	if err != nil {
 		log.Fatalln("template didn't execute: ", err)
+	}
+}
+
+func upGabriel(res http.ResponseWriter, req *http.Request) {
+
+	fmt.Println("Post Method received, form Gabriel")
+	SaveFile(res, req, "./user/gabriel/")
+}
+
+func upDavid(res http.ResponseWriter, req *http.Request) {
+
+	fmt.Println("Post Method received, form David")
+	SaveFile(res, req, "./user/david/")
+
+}
+
+func check(err error) {
+	if err != nil {
+		fmt.Println(err)
 	}
 }

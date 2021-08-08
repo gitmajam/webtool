@@ -1,49 +1,79 @@
 html{
-    background-color: lightblue;
+    background-color:#EBE9A2
+    /* gabo:#91EBE8;
+    david:#EBADA9;
+    background-color:#EBC07A;
+    background-color:#86EBAE; */
 }
+nav > section {
+    background-color: #EBC047;
+    margin: 5px;
+}
+
+section{
+    display: block;
+    margin: 1px;
+    padding: 1px;
+}
+
 article {
-    border: 1px solid snow;
     display: inline-block;
+}
+
+div {
+    display: block;
+    margin: 4px;
+    padding: 4px;
 }
 
 img {
     width: 200px;
-    /* box-sizing: border-box; */
-    border: 2px groove lightsalmon;
     padding: 10 px;
     margin: 10px;
     display: inline-block;
 }
 
 .gabriel{
-    background-color: rebeccapurple;
+    background-color:#A39D8B;
 }
 
 .david{
-    background-color:maroon;
+    background-color:#6A9E5D;
 }
-h2{
-    color: mintcream;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-    
-}
-h3{
-    text-align: center;
-    color: mintcream;
-}
-h1{
+
+.tittle{
     text-align: center;
 }
 
-div {
-    border: 1px solid snow;
-    display: block;
-    margin: 5px;
+.barra{
+    display: inline-block;
+    margin: 2px;
+    margin-left: 20px;
+}
+
+.personal {
+    display: inline-block;
+}
+header > section {
+    background-color: #6A9E5D;
+}
+
+.slight{
     padding: 5px;
+    margin:2px;
+    display: inline-block;
+    margin-left: 25px;
 }
 
-h2 {
-    display: inline-block; 
+.dark{
+    color:#575348
+}
+
+.light{
+    color:#e7dfc5
+}
+
+.navi {
+    color:#928d7b;
+    text-align: center;
 }
