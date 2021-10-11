@@ -40,11 +40,22 @@
                     <li> {{$val.First}}</li>
                     <li> {{$val.Last}}</li>
                     <li> {{$val.Role}}</li>
-
                     {{end}}
                 </ul>
             </div>
             {{end}}
+            <div>
+                <form action="/signup" method="POST">
+                    <label for="sr">Role</label>
+                    <select name="role" id="sr">
+                        <option value="user">user</option>
+                        <option value="admin">admin</option>
+                        <option value="superadmin">superadmin</option>
+                    </select>
+                    <input type="submit" value="Register">
+                </form>
+            </div>
+
         </section>
     </nav>
 

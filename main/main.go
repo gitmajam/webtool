@@ -41,8 +41,11 @@ func init() {
 
 	tpl = template.Must(template.ParseGlob("template/*"))
 
-	//connection to data base
-	db, err = sql.Open("mysql", "awuser:Teflonio45@tcp(mydbinstance.cvbw65qn9mnn.us-east-2.rds.amazonaws.com)/test02?charset=utf8")
+	//connection to data base azure
+	//db, err = sql.Open("mysql", "awuser:Teflonio45@tcp(mydbinstance.cvbw65qn9mnn.us-east-2.rds.amazonaws.com)/test02?charset=utf8")
+
+	//connection to data base local
+	db, err = sql.Open("mysql", "root:Dexam3t@tcp(localhost:3306)/testgallery?charset=utf8")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -69,7 +72,7 @@ func main() {
 	http.HandleFunc("/controlPanel", session(permission(controlPanel)))
 	http.HandleFunc("/logout", session(logout))
 
-	http.HandleFunc("/users", users)
+	http.HandleFunc("/controlPanel/users", users)
 	// http.HandleFunc("/controlPanel/create", session(permission(create)))
 	// http.HandleFunc("/controlPanel/insert", session(permission(insert)))
 	// http.HandleFunc("/controlPanel/read", session(permission(read)))
